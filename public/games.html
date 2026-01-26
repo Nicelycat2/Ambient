@@ -1,20 +1,103 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="Ambient" />
-    <meta name="description" content="The better way to browse." />
+    <meta name="title" content="FATE V3" />
+    <meta name="description" content="FATE V3 - The ultimate gaming experience." />
     <link rel="icon" type="image/x-icon" href="/public/assets/imgs/logo.png" />
-    <title>Ambient | Games</title>
-    <!-- Critical CSS -->
+    <title>FATE V3 | Games</title>
+    
+    <!-- Original CSS -->
     <link rel="stylesheet" href="assets/css/global.css" />
     <link rel="stylesheet" href="assets/css/theme/default.css" />
-    <!-- Non-critical CSS -->
     <link rel="stylesheet" href="assets/css/rays.css" />
     <link rel="stylesheet" href="assets/css/glass.css" />
     <link rel="stylesheet" href="assets/css/nav.css" />
     <link rel="stylesheet" href="assets/css/pages/games.css" />
+    
+    <!-- FATE V3 Theme Override -->
+    <style>
+      :root {
+        /* FATE V3 Colors */
+        --primary-color: #0f3460;
+        --secondary-color: #1e5f8e;
+        --accent-color: #3d84b8;
+        --bg-2-color: #16213e;
+        --bg-color: #0a0a23;
+        --text-color: #e0e0e0;
+        --text-secondary-color: #a0c8e6;
+        --border-color: #2c3e50;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated grid background */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          linear-gradient(rgba(15, 52, 96, 0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(15, 52, 96, 0.1) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: grid-move 20s linear infinite;
+        z-index: -1;
+      }
+
+      @keyframes grid-move {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(50px, 50px); }
+      }
+
+      /* Glass navigation */
+      nav {
+        background: rgba(22, 33, 62, 0.7) !important;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(61, 132, 184, 0.3) !important;
+      }
+
+      /* Glowing title */
+      .title {
+        background: linear-gradient(135deg, #ffffff, var(--primary-color), var(--accent-color)) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.6) !important;
+        animation: titleFloat 3s ease-in-out infinite !important;
+      }
+
+      @keyframes titleFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+      }
+
+      /* Glass game container */
+      .glass {
+        background: rgba(22, 33, 62, 0.5) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(61, 132, 184, 0.3) !important;
+      }
+
+      /* Link hover glow */
+      a:hover {
+        color: #ffffff !important;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.5) !important;
+      }
+
+      /* Ray effect glow */
+      .rays {
+        background: radial-gradient(circle, rgba(61, 132, 184, 0.1) 0%, transparent 70%) !important;
+      }
+    </style>
   </head>
 
   <body>
@@ -39,71 +122,14 @@
     <script src="assets/js/index.js"></script>
     <script src="assets/js/games.js"></script>
     <script src="assets/js/formatDesc.js"></script>
-    <!-- UV Files -->
     <script src="/search/bundle.js"></script>
     <script src="/search/config.js"></script>
-    <!-- DO NOT REMOVE -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
       lucide.createIcons();
     </script>
-    <!-- DO NOT REMOVE -->
-    <script>
-      const form = document.getElementById('uv-form');
-      const address = document.getElementById('searchbar');
-      const searchEngine = document.getElementById('uv-search-engine');
-      const error = document.getElementById('uv-error');
-      const errorCode = document.getElementById('uv-error-code');
-      const input = document.querySelector('input');
-
-      // crypts class definition
-      class crypts {
-        static encode(str) {
-          return encodeURIComponent(
-            str
-              .toString()
-              .split('')
-              .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char))
-              .join('')
-          );
-        }
-
-        static decode(str) {
-          if (str.charAt(str.length - 1) === '/') {
-            str = str.slice(0, -1);
-          }
-          return decodeURIComponent(
-            str
-              .split('')
-              .map((char, ind) => (ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char))
-              .join('')
-          );
-        }
-      }
-
-      function search(input) {
-        input = input.trim();
-        const searchTemplate = localStorage.getItem('engine') || 'https://google.com/search?q=%s';
-
-        try {
-          return new URL(input).toString();
-        } catch (err) {
-          try {
-            const url = new URL(`http://${input}`);
-            if (url.hostname.includes('.')) {
-              return url.toString();
-            }
-            throw new Error('Invalid hostname');
-          } catch (err) {
-            return searchTemplate.replace('%s', encodeURIComponent(input));
-          }
-        }
-      }
-      if ('serviceWorker' in navigator) {
-        var proxySetting = 'uv';
-        let swConfig = {
-          uv: { file: '/search/sw.js', config: __uv$config },
-        };
+  </body>
+</html>
 
         let { file: swFile, config: swConfigSettings } = swConfig[proxySetting];
 
