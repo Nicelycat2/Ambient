@@ -1,16 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="Ambient" />
-    <meta name="description" content="The better way to browse." />
+    <meta name="title" content="FATE Browser" />
+    <meta name="description" content="FATE V3 - The better way to browse." />
+    <title>FATE Browser</title>
     <link rel="icon" type="image/x-icon" href="/public/assets/imgs/logo.png" />
-    <title>Ambient</title>
-    <!-- Critical CSS -->
+    
+    <!-- Original CSS -->
     <link rel="stylesheet" href="assets/css/global.css" />
     <link rel="stylesheet" href="assets/css/theme/default.css" />
-    <!-- Non-critical CSS -->
     <link rel="stylesheet" href="assets/css/rays.css" />
     <link rel="stylesheet" href="assets/css/nav.css" />
     <link rel="stylesheet" href="assets/css/elements/news.css" />
@@ -18,6 +18,114 @@
     <link rel="stylesheet" href="assets/css/shortcuts.css" />
     <link rel="stylesheet" href="assets/css/elements/greeting.css" />
     <link rel="stylesheet" href="assets/css/elements/ping.css" />
+    
+    <!-- FATE V3 Theme Override -->
+    <style>
+      :root {
+        /* FATE V3 Colors */
+        --primary-color: #0f3460;
+        --secondary-color: #1e5f8e;
+        --accent-color: #3d84b8;
+        --bg-2-color: #16213e;
+        --bg-color: #0a0a23;
+        --text-color: #e0e0e0;
+        --text-secondary-color: #a0c8e6;
+        --border-color: #2c3e50;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated grid background */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          linear-gradient(rgba(15, 52, 96, 0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(15, 52, 96, 0.1) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: grid-move 20s linear infinite;
+        z-index: -1;
+      }
+
+      @keyframes grid-move {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(50px, 50px); }
+      }
+
+      /* Glass effect for nav */
+      nav {
+        background: rgba(22, 33, 62, 0.7) !important;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(61, 132, 184, 0.3);
+      }
+
+      /* Glow effects */
+      .title {
+        background: linear-gradient(135deg, #ffffff, var(--primary-color), var(--accent-color)) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.6) !important;
+        animation: titleFloat 3s ease-in-out infinite !important;
+      }
+
+      @keyframes titleFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+      }
+
+      /* Search bar glow */
+      .searchbar:focus {
+        box-shadow: 0 0 15px rgba(61, 132, 184, 0.5) !important;
+        border-color: var(--accent-color) !important;
+      }
+
+      /* Shortcut cards glass */
+      .shortcut {
+        background: rgba(22, 33, 62, 0.5) !important;
+        border: 1px solid rgba(61, 132, 184, 0.2) !important;
+        backdrop-filter: blur(5px);
+      }
+
+      .shortcut:hover {
+        border-color: var(--accent-color) !important;
+        box-shadow: 0 5px 20px rgba(61, 132, 184, 0.3) !important;
+      }
+
+      /* News ticker glass */
+      .news {
+        background: rgba(15, 52, 96, 0.3) !important;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(61, 132, 184, 0.2) !important;
+      }
+
+      /* Footer glass */
+      footer {
+        background: rgba(22, 33, 62, 0.5) !important;
+        backdrop-filter: blur(5px);
+        border-top: 1px solid rgba(61, 132, 184, 0.2) !important;
+      }
+
+      /* Link hover effects */
+      a:hover {
+        color: #ffffff !important;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.5) !important;
+      }
+
+      /* Glow for rays */
+      .rays {
+        background: radial-gradient(circle, rgba(61, 132, 184, 0.1) 0%, transparent 70%) !important;
+      }
+    </style>
   </head>
 
   <body>
@@ -39,7 +147,7 @@
         <i data-lucide=""></i>
         <p></p>
       </div>
-      <h1 class="title">Ambient</h1>
+      <h1 class="title">FATE Browser</h1>
       <div class="searchbarContainer">
         <i data-lucide="search"></i>
         <form id="uv-form">
@@ -62,15 +170,12 @@
     <script src="assets/js/shortcuts.js"></script>
     <script src="assets/js/elements/greeting.js"></script>
     <script src="assets/js/elements/ping.js"></script>
-    <!-- UV Files -->
     <script src="/search/bundle.js"></script>
     <script src="/search/config.js"></script>
-    <!-- DO NOT REMOVE -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
       lucide.createIcons();
     </script>
-    <!-- DO NOT REMOVE -->
     <script>
       const form = document.getElementById('uv-form');
       const address = document.getElementById('searchbar');
@@ -79,7 +184,6 @@
       const errorCode = document.getElementById('uv-error-code');
       const input = document.querySelector('input');
 
-      // crypts class definition
       class crypts {
         static encode(str) {
           return encodeURIComponent(
@@ -122,6 +226,7 @@
           }
         }
       }
+      
       if ('serviceWorker' in navigator) {
         var proxySetting = 'uv';
         let swConfig = {
